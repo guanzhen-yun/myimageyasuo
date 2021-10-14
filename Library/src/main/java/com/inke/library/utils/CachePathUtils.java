@@ -39,15 +39,16 @@ public class CachePathUtils {
      */
     public static File getCameraCacheFile() {
         //创建一个file，用来存储拍照后的照片
-        File outputfile = new File(getCameraDir(getBaseFileName()), "output.png");
+        File cameraDir = getCameraDir(Constants.COMPRESS_CACHE);
+        if(!cameraDir.exists()) {
+            cameraDir.mkdirs();
+        }
+        File imageFile = null;
         try {
-            if (outputfile.exists()) {
-                outputfile.delete();//删除
-            }
-            outputfile.createNewFile();
+            imageFile = File.createTempFile(getBaseFileName(), ".jpg", cameraDir);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return outputfile;
+        return imageFile;
     }
 }
